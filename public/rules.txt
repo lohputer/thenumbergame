@@ -3,3 +3,4 @@ Breaking any rule will result in you losing the game and having to restart.
 A and B should be positive integers.
 A ≠ B/2
 A ≠ B, unless A = 2
+A x B < (R)
