@@ -1,0 +1,6 @@
+#input {
+  position: fixed;
+}
+button, h1 {
+  transition: 0.5s linear;
+}
