@@ -3,4 +3,4 @@ The + button corresponding to A adds 1 to A.
 The - button corresponding to A subtracts 1 from A.
 The + button corresponding to B adds 1 to B.
 The - button corresponding to B subtracts 1 from B.
-Touching a button will make it swap colors.
+Clicking the + buttons will add 10 seconds to this interesting timer.
