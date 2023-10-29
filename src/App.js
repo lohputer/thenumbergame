@@ -29,30 +29,24 @@ export default function App() {
   const [plusB, setPlusB] = useState(1);
   const [timer, setTimer] = useState(30);
   useEffect(()=>{
-    if (A_value < 0 || B_value < 0) {
+    if (urcounter < 4 && (A_value < 0 || B_value < 0)) {
       setBrokenRule(3);
-      setFail(true);
     }
     if (rules.length >= 4) {
       if (A_value === B_value/2) {
         setBrokenRule(4);
-        setFail(true);
       }
       if (rules.length >= 5 && (A_value === B_value && A_value !== 2)) {
         setBrokenRule(5);
-        setFail(true);
       }
       if ((urcounter < 2 && rules.length >= 6) && (A_value + random1.current === B_value + random2.current)) {
         setBrokenRule(6);
-        setFail(true);
       }
       if (urcounter >= 2 && (A_value + random2.current === B_value + random1.current)) {
         setBrokenRule(6);
-        setFail(true);
       }
       if (rules.length >= 7 && (A_value + B_value**2) <= random4.current) {
         setBrokenRule(7);
-        setFail(true);
       }
     }
     if (highLvl < Math.min(A_value, B_value)) {
@@ -62,8 +56,24 @@ export default function App() {
         setLvl(Math.min(A_value, B_value));
       }, 500);
     }
+    if (brokenRule !== 0) {
+      document.getElementById("lvl").className = "col-12 text-danger";
+      document.getElementById("lvl").innerHTML = "RULE BROKEN";
+      setTimeout(()=>{
+        document.getElementById("lvl").className = "col-12 text-light";
+        setTimeout(()=>{
+          document.getElementById("lvl").className = "col-12 text-danger";
+          setTimeout(()=>{
+            document.getElementById("lvl").className = "col-12 text-light";
+          }, 500);
+        }, 500);
+      }, 500);
+      setTimeout(()=>{
+        setFail(true);
+      }, 2000);
+    }
     setLvl(Math.min(A_value, B_value));
-  }, [A_value, B_value, rules, highLvl, urcounter]);
+  }, [A_value, B_value, rules, highLvl, urcounter, brokenRule]);
   useEffect(() => {
     if (highLvl < lvl && !failed) {
       setHighLvl(lvl);
@@ -96,7 +106,6 @@ export default function App() {
               setUMCount(um => um + 1);
             }
           }
-          console.log(highLvl, changesContent, changesContent[highLvl-1]);
         } catch (error) {
           console.log(error);
         }
@@ -126,6 +135,30 @@ export default function App() {
       }
     }
   }, [umcounter, plusB, minusA, plusA]);
+  useEffect(()=>{
+    let intervalId;
+    if (mcounter === 3) {
+      setTimer(30);
+      intervalId = setInterval(function () {
+        setTimer((prevTime) => prevTime - 1);
+      }, 1000);
+    }
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [mcounter]);
+  useEffect(()=>{
+    if (timer < 0) {
+      setA(-Math.abs(A_value));
+      setB(-Math.abs(B_value));
+      document.getElementById("App").className.replace("bg-dark", "bg-light");
+      setTimeout(() => {
+        setTimer(30);
+      }, 15000);
+    }
+  }, [timer, A_value, B_value]);
   useEffect(() => {
       (async function () {
         try {
@@ -259,7 +292,7 @@ export default function App() {
     setB(temp3);
   }
   return (
-    <div className="vh-100 vw-100 d-flex m-auto p-auto align-items-center justify-content-center bg-dark ">
+    <div id="App" className="vh-100 vw-100 d-flex m-auto p-auto align-items-center justify-content-center bg-dark ">
       <div id="input" className="vh-100 vw-100 d-flex align-items-center justify-content-center bg-dark">
         <div className="rounded bg-dark border border-light border-10 text-center justify-content-center p-4 col-sm-10 col-md-6">
           <h1 className="text-light">{localStorage.getItem("name") === null ? "What is your username?" : `Hi! You may put in a different username or just submit your previous one.`}</h1>
@@ -269,8 +302,8 @@ export default function App() {
         </div>
       </div>
       {failed &&
-        <div id="input" className="vh-100 vw-100 d-flex align-items-center justify-content-center bg-dark">
-          <div className="m-auto p-2 rounded bg-dark border border-light border-10 text-center justify-content-center col-sm-10 col-md-6">
+        <div id="input" className="vh-100 w-100 d-flex bg-dark text-center justify-content-center ">
+          <div className="h-90 m-auto p-auto rounded bg-dark border border-light border-10 text-center justify-content-center col-sm-10 col-md-6">
               <h1 className="text-light">You broke rule {brokenRule}. Oof.</h1>
               <p className="text-light">On the bright side, you managed to reach level {highLvl}. During your time, the Number Game had these mechanics and rules.</p>
               <div className="row">
@@ -317,8 +350,8 @@ export default function App() {
             <h1 className="text-secondary col-4 p-1 m-0">{B_value}</h1>
             <button id="btnB2" className="btn btn-secondary col-4" onClick={()=>click("B", plusB)}>+</button>
           </div>
-          {mcounter >= 3 ? <h3 className="text-light col-12">{timer}</h3>: ""}
           {mcounter >= 2 ? <button className="btn btn-light text-center col-6 mt-3" onClick={()=>swap()}>Switch ⇆</button> : ""}
+          {mcounter >= 3 ? <h3 className="text-light col-12 mt-3">{timer}</h3>: ""}
           <div className="row">
             <div className="col-6 row d-flex flex-column align-items-center my-3 mx-auto">
               <table className="table table-striped table-primary rounded table-bordered">

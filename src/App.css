@@ -1,6 +1,7 @@
 #input {
   position: fixed;
+  overflow-y: scroll;
 }
-button, h1, td {
+* {
   transition: 0.5s linear;
 }

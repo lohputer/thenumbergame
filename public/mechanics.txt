@@ -5,4 +5,4 @@ The + button corresponding to B adds 1 to B.
 The - button corresponding to B subtracts 1 from B.
 The + and - buttons now swap places when one of them is clicked.
 The “Switch” button can change the values of A and B.
-There is now a timer which will set the values of A and B to negative when it reaches zero.
+There is now a 30 second timer which will set the values of A and B to negative when it reaches zero.
