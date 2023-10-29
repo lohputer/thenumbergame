@@ -1,0 +1,3 @@
+3 The - button corresponding to A subtracts (R3) from A.
+4 The + button corresponding to B adds (R3) to B.
+2 The + button corresponding to A adds (R5) to A.

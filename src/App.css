@@ -1,6 +1,6 @@
 #input {
   position: fixed;
 }
-button, h1 {
+button, h1, td {
   transition: 0.5s linear;
 }

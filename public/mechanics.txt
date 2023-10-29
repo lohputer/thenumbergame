@@ -3,4 +3,6 @@ The + button corresponding to A adds 1 to A.
 The - button corresponding to A subtracts 1 from A.
 The + button corresponding to B adds 1 to B.
 The - button corresponding to B subtracts 1 from B.
-Clicking the + buttons will add 10 seconds to this interesting timer.
+The + and - buttons now swap places when one of them is clicked.
+The “Switch” button can change the values of A and B.
+There is now a timer which will set the values of A and B to negative when it reaches zero.
