@@ -23,6 +23,7 @@ export default function App() {
   const random3 = useRef(Math.floor(Math.random()*4)+2);
   const random4 = useRef(Math.floor(Math.random()*100)+100);
   const random5 = useRef(Math.floor(Math.random()*5)+3);
+  const random6 = useRef(Math.floor(Math.random()*11)+5);
   const [minusA, setMinusA] = useState(-1);
   const [minusB, setMinusB] = useState(-1);
   const [plusA, setPlusA] = useState(1);
@@ -138,7 +139,9 @@ export default function App() {
   useEffect(()=>{
     let intervalId;
     if (mcounter === 3) {
-      setTimer(30);
+      if (timer < -15) {
+        setTimer(30);
+      }
       intervalId = setInterval(function () {
         setTimer((prevTime) => prevTime - 1);
       }, 1000);
@@ -148,12 +151,12 @@ export default function App() {
         clearInterval(intervalId);
       }
     };
-  }, [mcounter]);
+  }, [mcounter, timer]);
   useEffect(()=>{
     if (timer < 0) {
       setA(-Math.abs(A_value));
       setB(-Math.abs(B_value));
-      document.getElementById("App").className.replace("bg-dark", "bg-light");
+      setTimer("There is a cooldown before the timer starts again. Be patient.");
       setTimeout(() => {
         setTimer(30);
       }, 15000);
@@ -243,7 +246,7 @@ export default function App() {
                 <tr className={!failed && ((rcounter > 0 && i === 2+rcounter) || (i+1) in updatedRulesList) ? "rule table-success" : "rule table-secondary"} key={`rule-${i}`}>
                   <td>
                     <strong>Rule {i + 1} - </strong>
-                    {count < urcounter && (i+1) in updatedRulesList ? updatedRulesList[i+1].substring(2).replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current) : ruleContent[i].replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current)}
+                    {count < urcounter && (i+1) in updatedRulesList ? updatedRulesList[i+1].substring(2).replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current).replace("(R6)", random6.current) : ruleContent[i].replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current).replace("(R6)", random6.current)}
                   </td>
                 </tr>
               );
@@ -292,7 +295,7 @@ export default function App() {
     setB(temp3);
   }
   return (
-    <div id="App" className="vh-100 vw-100 d-flex m-auto p-auto align-items-center justify-content-center bg-dark ">
+    <div className="vh-100 vw-100 d-flex m-auto p-auto align-items-center justify-content-center bg-dark ">
       <div id="input" className="vh-100 vw-100 d-flex align-items-center justify-content-center bg-dark">
         <div className="rounded bg-dark border border-light border-10 text-center justify-content-center p-4 col-sm-10 col-md-6">
           <h1 className="text-light">{localStorage.getItem("name") === null ? "What is your username?" : `Hi! You may put in a different username or just submit your previous one.`}</h1>

@@ -1,4 +1,4 @@
-Once you progress to a new level, a new rule is added.
+Your goal is to progress to as high of a level as possible. Once you progress to a new level, a new rule is added.
 Breaking any rule will result in you losing the game and having to restart.
 A and B should be positive integers.
 A ≠ B/2

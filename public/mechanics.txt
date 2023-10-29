@@ -1,4 +1,4 @@
-Your level is the minimum value of A and B.
+Your level is the minimum value of A and B. For example, if B = 0 and A = 10, then you would be at level 0 because the minimum value of 0 and 10 is 0.
 The + button corresponding to A adds 1 to A.
 The - button corresponding to A subtracts 1 from A.
 The + button corresponding to B adds 1 to B.
