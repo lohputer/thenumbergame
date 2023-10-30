@@ -306,7 +306,7 @@ export default function App() {
       </div>
       {failed &&
         <div id="input" className="vh-100 w-100 d-flex bg-dark text-center justify-content-center ">
-          <div className="h-90 m-auto p-auto rounded bg-dark border border-light border-10 text-center justify-content-center col-sm-10 col-md-6">
+          <div className="h-90 m-auto p-2 rounded bg-dark border border-light border-10 text-center justify-content-center col-sm-10 col-md-6">
               <h1 className="text-light">You broke rule {brokenRule}. Oof.</h1>
               <p className="text-light">On the bright side, you managed to reach level {highLvl}. During your time, the Number Game had these mechanics and rules.</p>
               <div className="row">
