@@ -18,17 +18,19 @@ export default function App() {
   const [umcounter, setUMCount] = useState(0);
   const [failed, setFail] = useState(false);
   const [brokenRule, setBrokenRule] = useState(0);
-  const random1 = useRef(Math.floor(Math.random()*10)+1);
-  const random2 = useRef(Math.floor(Math.random()*10)+1);
-  const random3 = useRef(Math.floor(Math.random()*4)+2);
+  const random2 = useRef(Math.floor(Math.random()*5)+1);
+  const random1 = useRef(random2.current+Math.floor(Math.random()*5));
+  const random3 = useRef(Math.floor(Math.random()*5)+2);
   const random4 = useRef(Math.floor(Math.random()*100)+100);
   const random5 = useRef(Math.floor(Math.random()*5)+3);
-  const random6 = useRef(Math.floor(Math.random()*11)+5);
+  const random6 = useRef(Math.floor(Math.random()*5)+5);
   const [minusA, setMinusA] = useState(-1);
   const [minusB, setMinusB] = useState(-1);
   const [plusA, setPlusA] = useState(1);
   const [plusB, setPlusB] = useState(1);
   const [timer, setTimer] = useState(30);
+  const [negativeA, setNegativeA] = useState(0);
+  const [negativeB, setNegativeB] = useState(0);
   useEffect(()=>{
     if (urcounter < 4 && (A_value < 0 || B_value < 0)) {
       setBrokenRule(3);
@@ -40,14 +42,17 @@ export default function App() {
       if (rules.length >= 5 && (A_value === B_value && A_value !== 2)) {
         setBrokenRule(5);
       }
-      if ((urcounter < 2 && rules.length >= 6) && (A_value + random1.current === B_value + random2.current)) {
+      if ((urcounter < 3 && rules.length >= 6) && (A_value + random2.current > B_value + random1.current)) {
         setBrokenRule(6);
       }
-      if (urcounter >= 2 && (A_value + random2.current === B_value + random1.current)) {
+      if (urcounter >= 3 && (A_value + random1.current < B_value + random2.current)) {
         setBrokenRule(6);
       }
       if (rules.length >= 7 && (A_value + B_value**2) <= random4.current) {
         setBrokenRule(7);
+      }
+      if (rules.length >= 8 && (negativeA >= random6.current || negativeB >= random6.current)) {
+        setBrokenRule(8);
       }
     }
     if (highLvl < Math.min(A_value, B_value)) {
@@ -116,9 +121,9 @@ export default function App() {
   useEffect(()=>{
     if (umcounter >= 1) {
       if (minusA < 0) {
-        setMinusA(-random3.current);
+        setMinusA(-random2.current);
       } else {
-        setPlusA(-random3.current);
+        setPlusA(-random2.current);
       }
     }
     if (umcounter >= 2) {
@@ -194,7 +199,7 @@ export default function App() {
                 <tr className={!failed && ((mcounter > 0 && i === 4+mcounter) || (i+1) in updatedMechanicsList) ? "mech table-success" : "mech table-primary"} key={`mechanic-${i}`}>
                   <td>
                     <strong>Mechanic {i + 1} - </strong>
-                    {count < umcounter && (i+1) in updatedMechanicsList ? updatedMechanicsList[i+1].substring(2).replace("(R3)", random3.current).replace("(R5)", random5.current) : mechanicContent[i]}
+                    {count < umcounter && (i+1) in updatedMechanicsList ? updatedMechanicsList[i+1].substring(2).replace("(R2)", random2.current).replace("(R3)", random3.current).replace("(R5)", random5.current) : mechanicContent[i]}
                   </td>
                 </tr>
               );
@@ -269,6 +274,11 @@ export default function App() {
   function click(btn, num) {
     if (btn === "A") {
       setA(x => x + num);
+      if (A_value < 0) {
+        setNegativeA(x => x+1);
+      } else {
+        setNegativeA(0);
+      }
       if (mcounter >= 1) {
        var temp2 =  document.getElementById("btnA1").innerHTML;
        document.getElementById("btnA1").innerHTML = document.getElementById("btnA2").innerHTML;
@@ -278,6 +288,11 @@ export default function App() {
        setPlusA(temp2);
       }
     } else {
+      if (B_value < 0) {
+        setNegativeB(x => x+1);
+      } else {
+        setNegativeB(0);
+      }
       setB(x => x + num);
       if (mcounter >= 1) {
        var temp =  document.getElementById("btnB1").innerHTML;
@@ -340,7 +355,9 @@ export default function App() {
       }
       <div className="h-100 w-100 row">
         <div className="pt-5 m-auto bg-dark d-flex row text-center justify-content-center">
-          <h1 id="lvl" className="text-light col-12">Level {lvl}</h1>
+          <h1 className="text-light col-12">The Number Game</h1>
+          <h2 className="text-light col-12">50% Brain Power and 50% Luck</h2>
+          <h3 id="lvl" className="text-light col-12">Level {lvl}</h3>
           <h1 className="text-primary col-6 m-auto">A</h1>
           <h1 className="text-secondary col-6 m-auto">B</h1>
           <div className="col-5 row align-items-center m-auto">

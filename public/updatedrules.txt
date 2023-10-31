@@ -1,4 +1,4 @@
 1 Your goal is to progress to as high of a level as possible. Once you progress to a new level, one rule or mechanic is added or edited.
 1 Your goal is to progress to as high of a level as possible. Once you progress to a level that is an even number, one rule or mechanic is added or edited.
-6 A + (R2) ≠ B + (R1)
+6 A + (R1) >= B + (R2)
 3 A and B do not necessarily have to be positive integers.
