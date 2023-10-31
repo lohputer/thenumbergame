@@ -316,11 +316,13 @@ export default function App() {
           <h1 className="text-light">{localStorage.getItem("name") === null ? "What is your username?" : `Hi! You may put in a different username or just submit your previous one.`}</h1>
           <input id="name" className="rounded col-6 border p-2 m-2 text-center" type="text" defaultValue={localStorage.getItem("name")} onChange={() => {
               setName(document.getElementById("name").value);
-              localStorage.setItem("name", name);
             }
           } />
           <br></br>
-          <button className="btn btn-light m-2 p-1 col-4 bg-light" onClick={()=>document.getElementById("input").remove()}>Confirm</button>
+          <button className="btn btn-light m-2 p-1 col-4 bg-light" onClick={()=>{
+            localStorage.setItem("name", name);
+            document.getElementById("input").remove();
+          }}>Confirm</button>
         </div>
       </div>
       {failed &&
