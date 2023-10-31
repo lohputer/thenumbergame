@@ -314,7 +314,11 @@ export default function App() {
       <div id="input" className="vh-100 vw-100 d-flex align-items-center justify-content-center bg-dark">
         <div className="rounded bg-dark border border-light border-10 text-center justify-content-center p-4 col-sm-10 col-md-6">
           <h1 className="text-light">{localStorage.getItem("name") === null ? "What is your username?" : `Hi! You may put in a different username or just submit your previous one.`}</h1>
-          <input id="name" className="rounded col-6 border p-2 m-2 text-center" type="text" defaultValue={localStorage.getItem("name")} onChange={() => setName(document.getElementById("name").value)} />
+          <input id="name" className="rounded col-6 border p-2 m-2 text-center" type="text" defaultValue={localStorage.getItem("name")} onChange={() => {
+              setName(document.getElementById("name").value);
+              localStorage.setItem("name", name);
+            }
+          } />
           <br></br>
           <button className="btn btn-light m-2 p-1 col-4 bg-light" onClick={()=>document.getElementById("input").remove()}>Confirm</button>
         </div>
