@@ -79,7 +79,7 @@ export default function App() {
       }, 2000);
     }
     setLvl(Math.min(A_value, B_value));
-  }, [A_value, B_value, rules, highLvl, urcounter, brokenRule]);
+  }, [A_value, B_value, rules, highLvl, urcounter, brokenRule, negativeA, negativeB]);
   useEffect(() => {
     if (highLvl < lvl && !failed) {
       setHighLvl(lvl);
@@ -323,7 +323,7 @@ export default function App() {
         <div id="input" className="vh-100 w-100 d-flex bg-dark text-center justify-content-center ">
           <div className="h-90 m-auto p-2 rounded bg-dark border border-light border-10 text-center justify-content-center col-sm-10 col-md-6">
               <h1 className="text-light">You broke rule {brokenRule}. Oof.</h1>
-              <p className="text-light">On the bright side, you managed to reach level {highLvl}. During your time, the Number Game had these mechanics and rules.</p>
+              <p className="text-light">On the bright side, congratulations to you, {name} for managing to reach level {highLvl}. During your time, the Number Game had these mechanics and rules.</p>
               <div className="row">
                 <div className="col-6 row d-flex flex-column align-items-center my-3 mx-auto">
                   <table className="table table-striped table-primary rounded table-bordered">
