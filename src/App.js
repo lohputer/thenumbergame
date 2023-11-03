@@ -19,11 +19,12 @@ export default function App() {
   const [failed, setFail] = useState(false);
   const [brokenRule, setBrokenRule] = useState(0);
   const random2 = useRef(Math.floor(Math.random()*5)+1);
-  const random1 = useRef(random2.current+Math.floor(Math.random()*5));
+  const random1 = useRef(random2.current+Math.floor(Math.random()*5)+1);
   const random3 = useRef(Math.floor(Math.random()*5)+2);
   const random4 = useRef(Math.floor(Math.random()*100)+100);
   const random5 = useRef(Math.floor(Math.random()*5)+3);
   const random6 = useRef(Math.floor(Math.random()*5)+5);
+  const random7 = useRef(Math.floor(Math.random()*15)+15);
   const [minusA, setMinusA] = useState(-1);
   const [minusB, setMinusB] = useState(-1);
   const [plusA, setPlusA] = useState(1);
@@ -39,13 +40,13 @@ export default function App() {
       if (A_value === B_value/2) {
         setBrokenRule(4);
       }
-      if (rules.length >= 5 && (A_value === B_value && A_value !== 2)) {
+      if ((urcounter < 3 && rules.length >= 5) && (A_value === B_value && A_value !== 2)) {
         setBrokenRule(5);
       }
-      if ((urcounter < 3 && rules.length >= 6) && (A_value + random2.current > B_value + random1.current)) {
-        setBrokenRule(6);
+      if ((urcounter >= 3 && rules.length >= 5) && (A_value === B_value && A_value !== random7.current)) {
+        setBrokenRule(5);
       }
-      if (urcounter >= 3 && (A_value + random1.current < B_value + random2.current)) {
+      if (rules.length >= 6 && (A_value + random2.current > B_value + random1.current)) {
         setBrokenRule(6);
       }
       if (rules.length >= 7 && (A_value + B_value**2) <= random4.current) {
@@ -251,7 +252,7 @@ export default function App() {
                 <tr className={!failed && ((rcounter > 0 && i === 2+rcounter) || (i+1) in updatedRulesList) ? "rule table-success" : "rule table-secondary"} key={`rule-${i}`}>
                   <td>
                     <strong>Rule {i + 1} - </strong>
-                    {count < urcounter && (i+1) in updatedRulesList ? updatedRulesList[i+1].substring(2).replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current).replace("(R6)", random6.current) : ruleContent[i].replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current).replace("(R6)", random6.current)}
+                    {count < urcounter && (i+1) in updatedRulesList ? updatedRulesList[i+1].substring(2).replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current).replace("(R6)", random6.current).replace("(R7)", random7.current) : ruleContent[i].replace("(R1)", random1.current).replace("(R2)", random2.current).replace("(R4)", random4.current).replace("(R6)", random6.current)}
                   </td>
                 </tr>
               );
@@ -280,12 +281,12 @@ export default function App() {
         setNegativeA(0);
       }
       if (mcounter >= 1) {
-       var temp2 =  document.getElementById("btnA1").innerHTML;
+       let temp =  document.getElementById("btnA1").innerHTML;
        document.getElementById("btnA1").innerHTML = document.getElementById("btnA2").innerHTML;
-       document.getElementById("btnA2").innerHTML = temp2;
-       temp2 = minusA;
+       document.getElementById("btnA2").innerHTML = temp;
+       temp = minusA;
        setMinusA(plusA);
-       setPlusA(temp2);
+       setPlusA(temp);
       }
     } else {
       if (B_value < 0) {
@@ -295,7 +296,7 @@ export default function App() {
       }
       setB(x => x + num);
       if (mcounter >= 1) {
-       var temp =  document.getElementById("btnB1").innerHTML;
+       let temp =  document.getElementById("btnB1").innerHTML;
        document.getElementById("btnB1").innerHTML = document.getElementById("btnB2").innerHTML;
        document.getElementById("btnB2").innerHTML = temp;
        temp = minusB;
@@ -305,9 +306,9 @@ export default function App() {
     }
   }
   function swap() {
-    var temp3 = A_value;
+    let temp = A_value;
     setA(B_value);
-    setB(temp3);
+    setB(temp);
   }
   return (
     <div className="vh-100 vw-100 d-flex m-auto p-auto align-items-center justify-content-center bg-dark ">
